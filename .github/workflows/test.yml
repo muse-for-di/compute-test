@@ -1,0 +1,24 @@
+name: compute-test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Runner specs
+        run: |
+          echo "CPUs: $(nproc)"
+          nproc
+          echo "Memory:"
+          free -h
+          echo "Disk:"
+          df -h
+      - name: Python version
+        run: python3 --version
+      - name: Timing loop
+        run: |
+          python3 -c "import time; start=time.time(); total=sum(i*i for i in range(5000000)); print(f'Timing loop elapsed: {time.time()-start:.2f} seconds, total={total}')"
